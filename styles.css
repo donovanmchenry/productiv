@@ -1,0 +1,420 @@
+/* styles.css */
+
+/* Importing Wii-like font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color, #f7f7f7);
+    background-image: var(--background-image, none);
+    background-size: cover;
+    background-position: center;
+    color: var(--text-color, #333);
+}
+
+* {
+    font-family: inherit;
+}
+
+/* CSS Variables for colors */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #357abd;
+    --tertiary-color: #e0e0e0;
+    --quaternary-color: #333333;
+    --background-color: #f7f7f7;
+    --text-color: #333;
+    --menu-btn-bg: #ffffff;
+    --page-bg: #ffffff;
+    --tertiary-hover-color: #e0e0e0;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#level-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+#level {
+    font-size: 24px;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+#level-progress {
+    width: 150px;
+    height: 10px;
+    background-color: var(--tertiary-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#level-progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+#avatar {
+    background-image: url('avatar.png'); /* Replace 'avatar.png' with the actual image path */
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+#menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.menu-btn {
+    background-color: var(--menu-btn-bg, #fff);
+    border: none;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 15px 25px;
+    font-size: 18px;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.menu-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.menu-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: var(--page-bg, #fff);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+li {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative; /* Required for quantity badge positioning */
+}
+
+li:hover {
+    background-color: var(--tertiary-hover-color, #e0e0e0);
+}
+
+li.completed {
+    text-decoration: line-through;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    border: none;
+    border-radius: 10px;
+    margin-right: 10px;
+    background-color: var(--tertiary-color);
+    color: var(--text-color);
+}
+
+.input-container input[type="text"]:focus {
+    outline: none;
+    background-color: var(--tertiary-hover-color, #e0e0e0);
+}
+
+.add-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.add-btn:active {
+    background-color: var(--primary-color);
+}
+
+.settings-option {
+    margin-bottom: 20px;
+}
+
+.settings-option label {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.settings-option input[type="text"],
+.settings-option select,
+.settings-option input[type="file"],
+.settings-option input[type="color"] {
+    width: calc(100% - 120px);
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    color: var(--text-color);
+}
+
+.settings-option input[type="text"]:focus,
+.settings-option select:focus,
+.settings-option input[type="file"]:focus,
+.settings-option input[type="color"]:focus {
+    outline: none;
+    background-color: var(--tertiary-hover-color, #e0e0e0);
+}
+
+.timer-settings {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.timer-settings input[type="number"] {
+    width: 45%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.timer-settings input[type="number"]:focus {
+    outline: none;
+    background-color: var(--tertiary-hover-color, #e0e0e0);
+}
+
+#timerDisplay {
+    font-size: 48px;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-color);
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.timer-controls .add-btn {
+    margin: 0 10px;
+}
+
+#player {
+    display: none;
+}
+
+/* Styles for equipped items */
+#equippedItems {
+    margin-top: 20px;
+}
+
+#equippedItems h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+#equippedItems p {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Styles for inventory items with quantities */
+#inventoryList li {
+    position: relative; /* Ensure the badge positions relative to the list item */
+}
+
+#inventoryList li::after {
+    content: attr(data-quantity);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    display: none;
+}
+
+#inventoryList li[data-quantity]:hover::after {
+    display: inline-block;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none; /* Prevent interaction while not visible */
+    transition: opacity 0.5s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.notification-message {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.notification.animate {
+    animation: notificationAnimation 0.5s forwards;
+}
+
+/* Animation for Notifications */
+@keyframes notificationAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Confetti Canvas Styles */
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* Dark color scheme */
+body.dark {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --menu-btn-bg: #1e1e1e;
+    --page-bg: #1e1e1e;
+    --tertiary-color: #2c2c2c;
+    --tertiary-hover-color: #3a3a3a;
+    --primary-color: #bb86fc;
+    --secondary-color: #3700b3;
+}
+
+/* Light color scheme */
+body.light {
+    --background-color: #ffffff;
+    --text-color: #333;
+    --menu-btn-bg: #f0f0f0;
+    --page-bg: #f7f7f7;
+    --tertiary-color: #f0f0f0;
+    --tertiary-hover-color: #e0e0e0;
+    --primary-color: #6200ee;
+    --secondary-color: #3700b3;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .menu-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .input-container {
+        flex-direction: column;
+    }
+
+    .input-container input[type="text"],
+    .add-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .timer-settings {
+        flex-direction: column;
+    }
+
+    .timer-settings input[type="number"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+

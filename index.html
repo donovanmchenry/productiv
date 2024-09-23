@@ -1,0 +1,139 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Productivity App</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts for Wii-like font style -->
+    <link id="fontStylesheet" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap">
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="level-container">
+                <div id="level">Level 1</div>
+                <div id="level-progress">
+                    <div id="level-progress-bar"></div>
+                </div>
+            </div>
+            <div id="avatar"></div>
+        </div>
+        <div id="menu">
+            <button id="tasksBtn" class="menu-btn">Tasks</button>
+            <button id="goalsBtn" class="menu-btn">Goals</button>
+            <button id="timerBtn" class="menu-btn">Timer</button>
+            <button id="inventoryBtn" class="menu-btn">Inventory</button>
+            <button id="settingsBtn" class="menu-btn">Settings</button>
+        </div>
+    </div>
+
+    <!-- Tasks Page -->
+    <div id="tasksPage" class="page hidden">
+        <h2>Tasks</h2>
+        <ul id="tasksList"></ul>
+        <div class="input-container">
+            <input type="text" id="newTask" placeholder="Add a new task">
+            <button id="addTaskBtn" class="add-btn">Add Task</button>
+        </div>
+    </div>
+
+    <!-- Goals Page -->
+    <div id="goalsPage" class="page hidden">
+        <h2>Goals</h2>
+        <ul id="goalsList"></ul>
+        <div class="input-container">
+            <input type="text" id="newGoal" placeholder="Add a new goal">
+            <button id="addGoalBtn" class="add-btn">Add Goal</button>
+        </div>
+    </div>
+
+    <!-- Inventory Page -->
+    <div id="inventoryPage" class="page hidden">
+        <h2>Inventory</h2>
+        <ul id="inventoryList"></ul>
+        <div id="equippedItems">
+            <h3>Equipped Items:</h3>
+            <p id="equippedWeapon">Weapon: None</p>
+            <p id="equippedArmor">Armor: None</p>
+            <p id="equippedShield">Shield: None</p>
+        </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div id="settingsPage" class="page hidden">
+        <h2>Settings</h2>
+        <div class="settings-option">
+            <label for="bgMusicLink">Background Music (YouTube link):</label>
+            <input type="text" id="bgMusicLink" placeholder="Enter YouTube link">
+            <button id="saveMusicBtn" class="add-btn">Save Music</button>
+        </div>
+        <div class="settings-option">
+            <label>
+                <input type="checkbox" id="enableSounds" checked>
+                Enable Sounds
+            </label>
+        </div>
+        <div class="settings-option">
+            <label for="colorScheme">Color Scheme:</label>
+            <select id="colorScheme">
+                <option value="">Default</option>
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+            </select>
+        </div>
+        <div class="settings-option">
+            <label for="fontSelector">Font:</label>
+            <select id="fontSelector">
+                <!-- Options will be added dynamically -->
+            </select>
+        </div>
+        <div class="settings-option">
+            <label for="avatarUpload">Avatar Image:</label>
+            <input type="file" id="avatarUpload" accept="image/*">
+        </div>
+        <div class="settings-option">
+            <label for="backgroundUpload">Background Image/GIF:</label>
+            <input type="file" id="backgroundUpload" accept="image/*">
+        </div>
+    </div>
+
+    <!-- Timer Page -->
+    <div id="timerPage" class="page hidden">
+        <h2>Pomodoro Timer</h2>
+        <div id="timerDisplay">25:00</div>
+        <div class="timer-controls">
+            <button id="startTimerBtn" class="add-btn">Start</button>
+            <button id="pauseTimerBtn" class="add-btn">Pause</button>
+            <button id="resetTimerBtn" class="add-btn">Reset</button>
+        </div>
+        <div class="timer-settings">
+            <input type="number" id="workTime" placeholder="Work time (minutes)" value="25">
+            <input type="number" id="breakTime" placeholder="Break time (minutes)" value="5">
+        </div>
+    </div>
+
+    <!-- Level Up Notification -->
+    <div id="levelUpNotification" class="notification hidden">
+        <div id="levelUpMessage"></div>
+    </div>
+
+    <!-- Inventory Notification -->
+    <div id="inventoryNotification" class="notification hidden">
+        <div id="inventoryMessage"></div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- YouTube IFrame API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
+
