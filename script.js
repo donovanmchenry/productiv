@@ -20,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sound effects
     let enableSounds = true;
-    const clickSound = new Audio('click.mp3'); // Replace with your click sound file
-    const completeSound = new Audio('complete.mp3'); // Replace with your complete sound file
+    const clickSound = new Audio('click.mp3');
+    const completeSound = new Audio('complete.mp3');
 
     // Background music variables
-    let player; // YouTube player
-    let bgMusicLink = ''; // YouTube video ID for background music
+    let player;
+    let bgMusicLink = '';
 
     // Get references to DOM elements
     const levelDisplay = document.getElementById('level');
@@ -109,27 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Load fonts and populate dropdown
-    function loadFontOptions() {
-        fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCaWY63mOFQUswi8yNK4ssQQIwt8xhnvok')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const fonts = data.items;
-                fonts.forEach(font => {
-                    const option = document.createElement('option');
-                    option.value = font.family;
-                    option.textContent = font.family;
-                    fontSelector.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error loading fonts:', error);
-            });
-    }
+    const availableFonts = ['Roboto', 'Open Sans', 'Lato', 'Montserrat'];
+    availableFonts.forEach(font => {
+        const option = document.createElement('option');
+        option.value = font;
+        option.textContent = font;
+        fontSelector.appendChild(option);
+    });
 
     // Change font based on selection
     fontSelector.addEventListener('change', () => {
@@ -144,24 +130,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.fontFamily = `${fontName}, sans-serif`;
     }
 
-    loadFontOptions(); // Populate fonts on load
-
     // Function to adjust color brightness
     function adjustColorBrightness(hex, percent) {
         hex = hex.replace('#', '');
-        let r = parseInt(hex.substring(0,2),16);
-        let g = parseInt(hex.substring(2,4),16);
-        let b = parseInt(hex.substring(4,6),16);
+        let r = parseInt(hex.substring(0, 2), 16);
+        let g = parseInt(hex.substring(2, 4), 16);
+        let b = parseInt(hex.substring(4, 6), 16);
 
         r = parseInt(r * (100 + percent) / 100);
         g = parseInt(g * (100 + percent) / 100);
         b = parseInt(b * (100 + percent) / 100);
 
-        r = (r<255)?r:255;
-        g = (g<255)?g:255;
-        b = (b<255)?b:255;
+        r = (r < 255) ? r : 255;
+        g = (g < 255) ? g : 255;
+        b = (b < 255) ? b : 255;
 
-        const newHex = "#" + (("0"+r.toString(16)).slice(-2)) + (("0"+g.toString(16)).slice(-2)) + (("0"+b.toString(16)).slice(-2));
+        const newHex = "#" + (("0" + r.toString(16)).slice(-2)) + (("0" + g.toString(16)).slice(-2)) + (("0" + b.toString(16)).slice(-2));
         return newHex;
     }
 
@@ -213,11 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = event.target;
         li.removeEventListener('click', completeTask);
         li.classList.add('completed');
-        // Remove the task after the animation ends
-        li.addEventListener('transitionend', function() {
+        li.addEventListener('transitionend', function () {
             li.remove();
         });
-        // Add experience points
         addExperience(10); // Tasks give 10 XP
         playCompleteSound();
     }
@@ -244,11 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = event.target;
         li.removeEventListener('click', completeGoal);
         li.classList.add('completed');
-        // Remove the goal after the animation ends
-        li.addEventListener('transitionend', function() {
+        li.addEventListener('transitionend', function () {
             li.remove();
         });
-        // Add experience points
         addExperience(30); // Goals give 30 XP
         playCompleteSound();
     }
@@ -267,12 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
         level++;
         experience = experience - experienceNeeded;
         experienceNeeded = Math.floor(experienceNeeded * 1.5);
-        // Award generated item
         const newItem = generateItem();
         addItemToInventory(newItem);
-        // Show level up notification with animation
         showLevelUpNotification(level, newItem.name);
-        // Launch confetti
         launchConfetti();
     }
 
@@ -282,28 +259,22 @@ document.addEventListener('DOMContentLoaded', () => {
         levelUpNotification.classList.remove('hidden');
         levelUpNotification.classList.add('animate');
 
-        // Remove animation class after animation ends
         levelUpNotification.addEventListener('animationend', function handler() {
             levelUpNotification.classList.remove('animate');
             levelUpNotification.removeEventListener('animationend', handler);
         });
 
-        // Show the notification
         levelUpNotification.classList.add('show');
-
-        // Hide the notification after a delay
         setTimeout(() => {
             levelUpNotification.classList.remove('show');
-            // Fade out
             levelUpNotification.style.transition = 'opacity 0.5s ease';
             levelUpNotification.style.opacity = '0';
-            // Hide completely after fade-out
             setTimeout(() => {
                 levelUpNotification.classList.add('hidden');
                 levelUpNotification.style.opacity = '';
                 levelUpNotification.style.transition = '';
             }, 500);
-        }, 3000); // Display for 3 seconds
+        }, 3000);
     }
 
     // Function to show inventory notification
@@ -312,28 +283,22 @@ document.addEventListener('DOMContentLoaded', () => {
         inventoryNotification.classList.remove('hidden');
         inventoryNotification.classList.add('animate');
 
-        // Remove animation class after animation ends
         inventoryNotification.addEventListener('animationend', function handler() {
             inventoryNotification.classList.remove('animate');
             inventoryNotification.removeEventListener('animationend', handler);
         });
 
-        // Show the notification
         inventoryNotification.classList.add('show');
-
-        // Hide the notification after a delay
         setTimeout(() => {
             inventoryNotification.classList.remove('show');
-            // Fade out
             inventoryNotification.style.transition = 'opacity 0.5s ease';
             inventoryNotification.style.opacity = '0';
-            // Hide completely after fade-out
             setTimeout(() => {
                 inventoryNotification.classList.add('hidden');
                 inventoryNotification.style.opacity = '';
                 inventoryNotification.style.transition = '';
             }, 500);
-        }, 3000); // Display for 3 seconds
+        }, 3000);
     }
 
     // Function to launch confetti
@@ -354,16 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate items based on level
     function generateItem() {
-        // Determine material based on level
         const material = getMaterialForLevel(level);
-
-        // Randomly select item type
         const itemType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-
-        // Generate item name
         const itemName = material + ' ' + itemType;
-
-        // Determine item stats
         let multiplierBonus = getMultiplierBonus(material, itemType);
 
         return {
@@ -381,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tier < baseMaterials.length) {
             return baseMaterials[tier];
         } else {
-            // Procedurally generate new material names
             return generateMaterialName(tier);
         }
     }
@@ -391,20 +348,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const prefixes = ['Ultra', 'Mega', 'Hyper', 'Super', 'Max', 'Neo', 'Omega', 'Alpha', 'Eternal', 'Quantum'];
         const suffixes = ['ium', 'ite', 'on', 'ore', 'stone', 'crystal', 'essence', 'metal', 'alloy', 'flux'];
 
-        // Calculate indices based on tier
         const prefixIndex = Math.floor(tier / suffixes.length) % prefixes.length;
         const suffixIndex = tier % suffixes.length;
 
         const prefix = prefixes[prefixIndex];
         const suffix = suffixes[suffixIndex];
 
-        // Create material name
         return prefix + suffix;
     }
 
     // Function to determine multiplier bonus based on material and item type
     function getMultiplierBonus(material, itemType) {
-        // Base bonuses for item types
         const baseBonuses = {
             'Sword': 0.2,
             'Shield': 0.1,
@@ -412,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'Potion': 0.5
         };
 
-        // Increase per tier
         const tierIncrease = {
             'Sword': 0.02,
             'Shield': 0.01,
@@ -420,13 +373,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'Potion': 0.05
         };
 
-        // Determine tier based on material
         let tier;
         const materialIndex = baseMaterials.indexOf(material);
         if (materialIndex !== -1) {
             tier = materialIndex;
         } else {
-            // For procedurally generated materials
             tier = Math.floor((level - 1) / 5);
         }
 
@@ -435,7 +386,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to add item to inventory
     function addItemToInventory(newItem) {
-        // Check if item already exists in inventory
         const existingItem = inventory.find(item => item.name === newItem.name);
         if (existingItem) {
             existingItem.quantity += 1;
@@ -452,7 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
             li.textContent = item.name;
             li.dataset.index = index;
 
-            // Set data-quantity attribute if quantity > 1
             if (item.quantity > 1) {
                 li.setAttribute('data-quantity', item.quantity);
             }
@@ -463,94 +412,72 @@ document.addEventListener('DOMContentLoaded', () => {
         updateEquippedDisplay();
     }
 
-    // Function to use item (updated to use notifications)
+    // Function to use item
     function useItem(item, index) {
         playClickSound();
         if (item.quantity > 1) {
-            // Consume duplicate item for XP
             const duplicates = item.quantity - 1;
-            const xpFromDuplicate = 20 * duplicates; // Adjust the XP amount as desired
+            const xpFromDuplicate = 20 * duplicates;
             addExperience(xpFromDuplicate);
             item.quantity = 1;
             displayInventory();
-            // Show inventory notification
             showInventoryNotification('You converted ' + duplicates + ' duplicate(s) of ' + item.name + ' into ' + xpFromDuplicate + ' XP!');
-            // Launch confetti
             launchConfetti();
         } else {
-            // Proceed to equip/use the item
             if (item.type === 'Potion') {
-                // Consume the potion to get XP multiplier
                 xpMultiplier += item.multiplierBonus;
-                // Remove potion from inventory
                 inventory.splice(index, 1);
                 displayInventory();
-                // Reset multiplier after next task
                 const resetMultiplier = () => {
                     xpMultiplier -= item.multiplierBonus;
                     if (xpMultiplier < 1) xpMultiplier = 1;
                 };
-                // Wrap completeTask and completeGoal to reset multiplier after use
                 const originalCompleteTask = completeTask;
                 const originalCompleteGoal = completeGoal;
-                completeTask = function(event) {
+                completeTask = function (event) {
                     originalCompleteTask(event);
                     resetMultiplier();
                     completeTask = originalCompleteTask;
                 };
-                completeGoal = function(event) {
+                completeGoal = function (event) {
                     originalCompleteGoal(event);
                     resetMultiplier();
                     completeGoal = originalCompleteGoal;
                 };
-                // Show inventory notification
                 showInventoryNotification('You drank a ' + item.name + '! XP multiplier increased by ' + item.multiplierBonus.toFixed(2) + ' for the next task.');
-                // Launch confetti
                 launchConfetti();
             } else if (item.type === 'Sword') {
                 if (equipped.weapon) {
-                    // Remove previous weapon bonus
                     xpMultiplier -= equipped.weapon.multiplierBonus;
                     addItemToInventory(equipped.weapon);
                 }
                 equipped.weapon = item;
                 xpMultiplier += item.multiplierBonus;
-                // Remove item from inventory
                 inventory.splice(index, 1);
                 displayInventory();
-                // Show inventory notification
                 showInventoryNotification('You equipped a ' + item.name + '! XP multiplier increased by ' + item.multiplierBonus.toFixed(2) + '.');
-                // Launch confetti
                 launchConfetti();
             } else if (item.type === 'Shield') {
                 if (equipped.shield) {
-                    // Remove previous shield bonus
                     xpMultiplier -= equipped.shield.multiplierBonus;
                     addItemToInventory(equipped.shield);
                 }
                 equipped.shield = item;
                 xpMultiplier += item.multiplierBonus;
-                // Remove item from inventory
                 inventory.splice(index, 1);
                 displayInventory();
-                // Show inventory notification
                 showInventoryNotification('You equipped a ' + item.name + '! XP multiplier increased by ' + item.multiplierBonus.toFixed(2) + '.');
-                // Launch confetti
                 launchConfetti();
             } else if (item.type === 'Armor') {
                 if (equipped.armor) {
-                    // Remove previous armor bonus
                     xpMultiplier -= equipped.armor.multiplierBonus;
                     addItemToInventory(equipped.armor);
                 }
                 equipped.armor = item;
                 xpMultiplier += item.multiplierBonus;
-                // Remove item from inventory
                 inventory.splice(index, 1);
                 displayInventory();
-                // Show inventory notification
                 showInventoryNotification('You equipped ' + item.name + '! XP multiplier increased by ' + item.multiplierBonus.toFixed(2) + '.');
-                // Launch confetti
                 launchConfetti();
             }
             updateEquippedDisplay();
@@ -582,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetTimerBtn.addEventListener('click', () => { playClickSound(); resetTimer(); });
 
     function startTimer() {
-        if (isTimerRunning) return; // Prevent multiple intervals
+        if (isTimerRunning) return;
         isTimerRunning = true;
         if (timeRemaining === undefined || timeRemaining === null) {
             isWorkTime = true;
@@ -653,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Load YouTube IFrame Player API
-    window.onYouTubeIframeAPIReady = function() {
+    window.onYouTubeIframeAPIReady = function () {
         if (bgMusicLink) {
             player = new YT.Player('player', {
                 height: '0',
@@ -692,53 +619,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(playerDiv);
 
     // Handle Avatar Upload
-    avatarUpload.addEventListener('change', function(event) {
+    avatarUpload.addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 avatar.style.backgroundImage = `url(${e.target.result})`;
-                // Optionally, save the avatar to localStorage for persistence
                 localStorage.setItem('avatarImage', e.target.result);
             }
             reader.readAsDataURL(file);
         }
     });
 
-    // Load Avatar from localStorage on page load
     const savedAvatar = localStorage.getItem('avatarImage');
     if (savedAvatar) {
         avatar.style.backgroundImage = `url(${savedAvatar})`;
     }
 
     // Handle Background Image Upload
-    backgroundUpload.addEventListener('change', function(event) {
+    backgroundUpload.addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 document.documentElement.style.setProperty('--background-image', `url(${e.target.result})`);
-                // Optionally, save the background image to localStorage for persistence
                 localStorage.setItem('backgroundImage', e.target.result);
             }
             reader.readAsDataURL(file);
         }
     });
 
-    // Load Background Image from localStorage on page load
     const savedBackground = localStorage.getItem('backgroundImage');
     if (savedBackground) {
         document.documentElement.style.setProperty('--background-image', `url(${savedBackground})`);
     }
 
-    // Fixing the updateFont function
-    function updateFont(fontName) {
-        const newFontURL = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
-        fontStylesheet.href = newFontURL;
-        document.body.style.fontFamily = `${fontName}, sans-serif`;
-    }
-
-    // Initial display update
     updateLevelDisplay();
 });
-

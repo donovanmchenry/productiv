@@ -1,2 +1,2 @@
-# stickywall
-This is a very simple project where you attach sticky notes to a wall.
+# productiv
+"productiv" is a task management application designed to help users organize and complete their daily activities efficiently. It utilizes RPG gaming elements with a clean layout to motivate users to get through their daily tasks and long term goals.
